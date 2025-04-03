@@ -44,3 +44,12 @@ def generate_random(data_type, min_value=None, max_value=None, is_printing_gener
     if is_printing_generate_value:
         print_generate_number(generated_value)
     return generated_value
+
+
+def generate_sequence(data_type, min_value=None, max_value=None, count=None, is_printing_generate_value=False):
+    """Generator function that yields a sequence of random values."""
+    if count is None:
+        count = random.randint(10, 100)
+
+    for _ in range(count):
+        yield generate_random(data_type, min_value, max_value, is_printing_generate_value=is_printing_generate_value)
