@@ -11,12 +11,11 @@ b) Find the composition of the list located between the first and last elements 
 def get_numbers():
     """Function to get numbers from user"""
     list_numbers = []
-
-    mode = inputValidate.input_data(description="1 - Generate sequence nums\n0 - Autor input\n",
-                                    data_type=int, min_value=0,max_value=1)
+    mode = inputValidate.input_data(description="1 - Generate sequence nums\n0 - Author input\n",
+                                    data_type=int, min_value=0, max_value=1)
 
     if mode == 1:
-        list_numbers = list(generateRandom.generate_sequence(data_type=float, is_printing_generate_value=True))
+        list_numbers = list(generateRandom.generate_sequence(data_type=float,is_printing_generate_value=True))
     else:
         while True:
             num = inputValidate.input_data_with_random("Input float num or 0 for finishing input: ", float,
