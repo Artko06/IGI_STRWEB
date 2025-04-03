@@ -35,13 +35,13 @@ def count_letter_repeatability(text):
 
 def sort_phrases_in_text(text):
     """Function for sorting words in each phrase of text"""
-    phrases = text.replace('.', '').split(", ")
+    phrases = text.lower().replace('.', '').split(", ")
 
-    for i in range(len(phrases)):
-        sorted_words = sorted(phrases[i].split())
-        phrases[i] = ' '.join(sorted_words)
-
-    return phrases
+    # for i in range(len(phrases)):
+    #     sorted_words = sorted(phrases[i].split())
+    #     phrases[i] = ' '.join(sorted_words)
+    phrases = sorted(phrases)
+    return  phrases
 
 
 def print_description():

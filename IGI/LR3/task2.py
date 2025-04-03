@@ -1,6 +1,6 @@
 import inputValidate
 
-DESCRIPTION = """Create a loop that takes integers and calculates the largest of them. 
+DESCRIPTION = """Create a loop that takes integers and calculates the largest of them.
     The loop ends when the number 0 is entered"""
 
 

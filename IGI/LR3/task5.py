@@ -3,7 +3,7 @@
 
 import inputValidate
 
-DESCRIPTION = """a) Find useful positive elements of the list
+DESCRIPTION = """a) Find min positive elements of the list
 b) Find the composition of the list located between the first and last elements of the elements"""
 
 
@@ -44,7 +44,7 @@ def find_min_positive(numbers):
 def calculate_sum_between_first_and_last_positive(numbers, index_first_positive, index_last_positive):
     """Function to calculate the sum of elements between the first and last positive number"""
     if index_first_positive != index_last_positive:
-        return sum(numbers[index_first_positive + 1:index_last_positive])
+        return sum(numbers[(index_first_positive + 1):index_last_positive])
     else:
         return None
 

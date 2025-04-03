@@ -5,7 +5,6 @@ def input_data(description, data_type, min_value=None, max_value=None):
     """Prompts the user for input, validates type and value constraints, and returns the valid input"""
     while True:
         try:
-
             user_input = data_type(input(description))
 
             if min_value is not None and user_input < min_value:
