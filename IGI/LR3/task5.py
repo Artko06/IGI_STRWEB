@@ -2,6 +2,7 @@
 # b) Найти сумму элементов списка, расположенных между первым и последним положительными элементами
 
 import inputValidate
+import generateRandom
 
 DESCRIPTION = """a) Find min positive elements of the list
 b) Find the composition of the list located between the first and last elements of the elements"""
@@ -10,14 +11,19 @@ b) Find the composition of the list located between the first and last elements 
 def get_numbers():
     """Function to get numbers from user"""
     list_numbers = []
+    mode = inputValidate.input_data(description="1 - Generate sequence nums\n0 - Author input\n",
+                                    data_type=int, min_value=0, max_value=1)
 
-    while True:
-        num = inputValidate.input_data_with_random("Input float num or 0 for finishing input: ", float,
-                                                   is_generate_random=True, is_printing_generate_value=True)
-        if num != 0:
-            list_numbers.append(num)
-        else:
-            break
+    if mode == 1:
+        list_numbers = list(generateRandom.generate_sequence(data_type=float,is_printing_generate_value=True))
+    else:
+        while True:
+            num = inputValidate.input_data_with_random("Input float num or 0 for finishing input: ", float,
+                                                       is_generate_random=True, is_printing_generate_value=True)
+            if num != 0:
+                list_numbers.append(num)
+            else:
+                break
 
     return list_numbers
 
