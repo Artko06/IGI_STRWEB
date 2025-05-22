@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+<body>
+    <div class="navbar">
+        <a id="register" href="{% url 'register' %}" class="tab">Регистрация</a>
+        <a id="login" class="tab active" href="#">Вход</a>
+    </div>
+    <div class="container form-container">
+        <h1>Вход</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="error">{{ form.username.errors }}</div>
+            {% endif %}
+
+            <label for="{{ form.password.id_for_label }}">Пароль</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="error">{{ form.password.errors }}</div>
+            {% endif %}
+        
+            {% if form.non_field_errors %}
+                <div class="error">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <button type="submit">Войти</button>
+        </form>
+
+        <a href="{% url 'register' %}">Нет аккаунта? Регистрация</a><br>
+        <a href="{% url 'about_us' %}">Продолжить без регистрации</a>
+    </div>
+    <script src="{% static 'js/navigation.js' %}"></script>
+</body>
+</html>

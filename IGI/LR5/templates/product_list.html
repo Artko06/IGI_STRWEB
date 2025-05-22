@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+<body>
+
+<div class="navbar">
+    <div class="left-items">
+        <a href="#" id="latest" class="tab">Последнее</a>
+        <a href="#" id="about" class="tab">О нас</a>
+        <a href="#" id="news" class="tab">Новости</a>
+        <a href="{% url 'vacancy_list' %}" id="vacancies" class="tab">Вакансии</a>
+        <a href="#" id="faq" class="tab">FAQ</a>
+        <a href="#" id="contacts" class="tab">Контакты</a>
+        <a href="#" id="products" class="tab active">Товары</a>
+        <a href="#" id="gif" class="tab">GIF</a>
+        <a href="#" id="rand" class="tab">Шутки</a>
+        {% if user.is_authenticated and not user.is_staff %}
+            <a href="{% url 'my_purchases' %}" id="mypurchases" class="tab">Мои покупки</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'promo_list' %}" id="promocodes" class="tab">Промокоды</a>
+        {% endif %}
+        {% if user.is_staff %}
+            <a href="#" id="sales" class="tab">Продажи</a>
+        {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+    <div class="sp">
+        <span>Привет, {{ user.username }}!</span>
+        <a href="/logout">Выйти</a>
+    </div>
+    {% else %}
+        <a href="/login">Войти</a>
+    {% endif %}
+</div>
+
+<div class="container">
+    <h1>Товары</h1>
+        <form method="get" class="filter-form">
+            <label for="min_price">Минимальная цена:</label>
+            <input type="number" step="1" name="min_price" id="min_price" value="{{ request.GET.min_price }}">
+
+            <label for="max_price">Максимальная цена:</label>
+            <input type="number" step="1" name="max_price" id="max_price" value="{{ request.GET.max_price }}">
+
+            <label for="category">Категория:</label>
+            <select name="category" id="category">
+                <option value="">Все</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Фильтр</button>
+        </form>
+    {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'create_product' %}" class="button">Добавить товар</a>
+    {% endif %}
+    <div>
+        {% for product in products %}
+            <div class="article-summary">
+                <h2>{{ product.name }}</h2>
+                <p>Единица измерения: {{ product.get_unit_display }}</p>
+                <p>Цена: {{ product.price }}</p>
+                {% if user.is_authenticated and not user.is_staff %}
+                    <a href="{% url 'buy_product' product.pk %}" class="buy-button">Купить</a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'buy_product' product.pk %}" class="buy-button">Купить</a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'product_reviews' product_id=product.id %}" class="reviews-button">Отзывы</a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'product_reviews' product_id=product.id %}" class="reviews-button">Отзывы</a>
+                {% endif %}
+                {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'edit_product' product.pk %}" class="read-more">Редактировать</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{% static 'js/navigation.js' %}"></script>
+</body>
+</html>
