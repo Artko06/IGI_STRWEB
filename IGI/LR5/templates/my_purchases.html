@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+</head>
+<body class="body">
+<div class="navbar">
+    <div class="left-items">
+        <a href="{% url 'latest_article' %}" id="latest" class="tab">Последнее</a>
+        <a href="{% url 'about_us' %}" id="about" class="tab">О нас</a>
+        <a href="{% url 'article_list' %}" id="news" class="tab">Новости</a>
+        <a href="{% url 'vacancy_list' %}" id="vacancies" class="tab">Вакансии</a>
+        <a href="{% url 'faq_list' %}" id="faq" class="tab">FAQ</a>
+        <a href="{% url 'contact_list' %}" id="contacts" class="tab">Контакты</a>
+        <a href="{% url 'products_list' %}" id="products" class="tab">Товары</a>
+        <a href="{% url 'gif' %}" id="gif" class="tab">GIF</a>
+        <a href="{% url 'rand' %}" id="rand" class="tab">Шутки</a>
+        {% if user.is_authenticated and not user.is_staff %}
+            <a href="{% url 'my_purchases' %}" id="mypurchases" class="tab active">Мои покупки</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'promo_list' %}" id="promocodes" class="tab">Промокоды</a>
+        {% endif %}
+        {% if user.is_staff %}
+            <a href="{% url 'sale_list' %}" id="sales" class="tab">Продажи</a>
+        {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+        <div class="sp">
+            <span>Привет, {{ user.username }}!</span>
+            <a href="{% url 'logout' %}">Выйти</a>
+        </div>
+    {% else %}
+        <a href="{% url 'login' %}">Войти</a>
+    {% endif %}
+</div>
+
+<div class="container">
+    <h1>Мои покупки</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Покупатель</th>
+            <th>Email</th>               
+            <th>Телефон</th>          
+            <th>Дата продажи</th>
+            <th>Дата доставки</th>
+            <th>Город</th>
+            <th>Товары</th>
+            <th>Итоговая цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sale in sales %}
+            <tr>
+                <td>{{ sale.customer.first_name }} {{ sale.customer.last_name }}</td>
+                <td>{{ sale.customer.email }}</td>  
+                <td>{{ sale.customer.phone }}</td>    
+                <td>{{ sale.sale_date|date:"Y-m-d" }}</td>
+                <td>{{ sale.delivery_date|date:"Y-m-d" }}</td>
+                <td>{{ sale.city }}</td>
+                <td>
+                    <ul>
+                        {% for sale_product in sale.saleproduct_set.all %}
+                            <li>{{ sale_product.product.name }}
+                                - {{ sale_product.quantity }} {{ sale_product.product.get_unit_display }}
+                                ({{ sale_product.price }})
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ sale.total_price }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">У вас пока нет покупок.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+<script src="{% static 'js/navigation.js' %}"></script>
+</body>
+</html>
