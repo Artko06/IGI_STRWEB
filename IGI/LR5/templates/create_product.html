@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать</title>
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="left-items">
+            <a href="#" id="latest" class="tab">Последнее</a>
+            <a href="#" id="about" class="tab">О нас</a>
+            <a href="#" id="news" class="tab">Новости</a>
+            <a href="{% url 'vacancy_list' %}" id="vacancies" class="tab">Вакансии</a>
+            <a href="#" id="faq" class="tab">FAQ</a>
+            <a href="#" id="contacts" class="tab active">Контакты</a>
+            <a href="#" id="products" class="tab">Товары</a>
+            <a href="#" id="gif" class="tab">GIF</a>
+            <a href="#" id="rand" class="tab">Шутки</a>
+            <a href="{% url 'privacy_policy' %}" id="privacy-policy" class="tab">Политика конфиденциальности</a>
+            {% if user.is_authenticated and not user.is_staff %}
+                <a href="{% url 'my_purchases' %}" id="mypurchases" class="tab">Мои покупки</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'promo_list' %}" id="promocodes" class="tab">Промокоды</a>
+            {% endif %}
+            {% if user.is_staff %}
+                <a href="#" id="sales" class="tab">Продажи</a>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <div class="sp">
+            <span>Привет, {{ user.username }}!</span>
+            <a href="/logout">Выйти</a>
+        </div>
+        {% else %}
+            <a href="/login">Войти</a>
+        {% endif %}
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <h1>{% block title %}Создать/Редактировать товар{% endblock %}</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'js/navigation.js' %}"></script>
+</body>
+</html>
