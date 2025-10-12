@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<main>
+    <article class="product-detail-card" aria-label="Детальная информация о товаре">
+        <header>
+            <h1 class="product-title">{{ product.name }}</h1>
+        </header>
+
+        <section class="product-info" aria-label="Информация о товаре">
+            <div class="product-details">
+                <p><strong>Цена:</strong> {{ product.price }} <abbr title="Белорусский рубль">BYN</abbr></p>
+                <p><strong>Единица измерения:</strong> {{ product.get_unit_display }}</p>
+                <p><strong>Категория:</strong> {{ product.category.name }}</p>
+            </div>
+
+            {% if user.is_authenticated and not user.is_staff %}
+            <form method="POST" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form" aria-label="Добавить товар в корзину">
+                {% csrf_token %}
+                <label for="quantity">Количество:</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" required class="quantity-input">
+                <button type="submit" class="add-to-cart-button">&#128722; Добавить в корзину</button>
+            </form>
+            {% elif not user.is_authenticated %}
+            <p>Чтобы добавить товар в корзину, <a href="{% url 'login' %}?next={% url 'product_detail' product.pk %}">войдите</a></p>
+            {% endif %}
+        </section>
+
+        <section class="product-actions" aria-label="Действия с товаром">
+            {% if user.is_authenticated %}
+                <a href="{% url 'product_reviews' product_id=product.id %}" class="reviews-link">&#128221; Смотреть отзывы</a>
+            {% endif %}
+
+            {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'edit_product' product.pk %}" class="edit-link">✏️ Редактировать</a>
+            {% endif %}
+        </section>
+    </article>
+</main>
+{% endblock %}

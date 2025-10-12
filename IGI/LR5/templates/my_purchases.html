@@ -20,6 +20,7 @@
         <a href="{% url 'products_list' %}" id="products" class="tab">Товары</a>
         <a href="{% url 'gif' %}" id="gif" class="tab">GIF</a>
         <a href="{% url 'rand' %}" id="rand" class="tab">Шутки</a>
+        <a href="{% url 'privacy_policy' %}" id="privacy-policy" class="tab">Политика конфиденциальности</a>
         {% if user.is_authenticated and not user.is_staff %}
             <a href="{% url 'my_purchases' %}" id="mypurchases" class="tab active">Мои покупки</a>
         {% endif %}

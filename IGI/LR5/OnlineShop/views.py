@@ -349,3 +349,7 @@ def my_purchases(request):
 def vacancy_list(request):
     vacancies = Vacancy.objects.order_by('-published_date')
     return render(request, 'vacancies.html', {'vacancies': vacancies})
+
+
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')
