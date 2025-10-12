@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Открытые вакансии{% endblock %}
+
+{% block content %}
+<main>
+    <header>
+        <h1>Открытые вакансии</h1>
+    </header>
+
+    <section class="vacancies-list" aria-label="Список открытых вакансий">
+        {% for vacancy in vacancies %}
+        <article class="vacancy-card">
+            <header>
+                <h2>{{ vacancy.title }}</h2>
+            </header>
+
+            <p>
+                <strong>Зарплата:</strong>
+                {% if vacancy.salary %}
+                    {{ vacancy.salary }} <abbr title="Белорусский рубль">BYN</abbr>
+                {% else %}
+                    По договоренности
+                {% endif %}
+            </p>
+
+            <p>{{ vacancy.description }}</p>
+
+            <footer>
+                <p><em>Опубликовано:
+                    <time datetime="{{ vacancy.published_date|date:'Y-m-d' }}">{{ vacancy.published_date|date:"d.m.Y" }}</time>
+                </em>
+                </p>
+            </footer>
+        </article>
+        {% empty %}
+        <p>На данный момент вакансий нет.</p>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}
