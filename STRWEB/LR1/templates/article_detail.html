@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ article.title }}{% endblock %}
+    
+{% block content %}
+<main>
+    <article>
+        <header>
+            <h1>{{ article.title }}</h1>
+        </header>
+
+        <figure>
+            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+        </figure>
+
+        <section>
+            <p>{{ article.content }}</p>
+        </section>
+
+        <footer>
+            <nav>
+                <a href="{% url 'article_list' %}">Вернуться к списку статей</a>
+            </nav>
+        </footer>
+
+    </article>
+</main>
+{% endblock %}

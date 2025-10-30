@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Список промокодов{% endblock %}
+
+{% block content %}
+<main>
+    <header>
+        <h1>Список промокодов</h1>
+    </header>
+
+    <section aria-label="Таблица промокодов">
+        {% if promo_codes %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Код</th>
+                    <th scope="col">Скидка (%)</th>
+                    <th scope="col">Активен</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for promo in promo_codes %}
+                <tr>
+                    <td>{{ promo.code }}</td>
+                    <td>{{ promo.discount_percent }}</td>
+                    <td>{% if promo.active %}Да{% else %}Нет{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Нет доступных промокодов.</p>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

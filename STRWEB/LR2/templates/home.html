@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Главная{% endblock %}
+
+{% block head %}
+    {% block extra_css %}
+       {{ block.super }}
+       <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="cleaning-animation" aria-label="Анимация процесса очистки">
+        <div class="dirty-surface"></div>
+        <div class="cleaning-spray">
+            <div class="nozzle"></div>
+            <div class="spray-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+        <div class="sponge"></div>
+        <div class="cleaning-effect"></div>
+        <div class="company-name">Союз Чистоты</div>
+    </section>
+
+    <section aria-label="Логотип сайта">
+        <header>
+            <h1>Логотип</h1>
+        </header>
+        <figure>
+            <img src="/media/images/logo.png" class="logo" width="150" alt="Логотип сайта">
+        </figure>
+    </section>
+
+    <section class="latest-article" aria-label="Последняя опубликованная статья">
+        <header>
+            <h1>Краткая информация о последней опубликованной статье</h1>
+        </header>
+        <article class="article-summary">
+            <h2>{{ article.title }}</h2>
+            <p class="capitalize"><strong>Дата публикации:</strong> {{ article.publication_date }}</p>
+            <p class="capitalize"><strong>Краткое описание:</strong> {{ article.summary }}</p>
+            <p class="capitalize"><strong>Автор:</strong> {{ article.author }}</p>
+        </article>
+    </section>
+
+    <section class="advertisements" aria-label="Рекламные баннеры">
+        <header>
+            <h1>Рекламные баннеры</h1>
+        </header>
+        <div class="ad-row" style="display: flex; gap: 10px;">
+            <figure>
+                <img src="/media/images/ad0.jpg" alt="Рекламный баннер" width="700" height="400">
+            </figure>
+            <figure>
+                <img src="/media/images/ad1.jpg" alt="Рекламный баннер" width="800" height="400">
+            </figure>
+        </div>
+    </section>
+
+    <section class="partners" aria-label="Наши партнеры">
+        <header>
+            <h1>Наши партнеры</h1>
+        </header>
+        <ul class="partners-list">
+            {% for partner in partners %}
+            <li>
+                <a href="{{ partner.website }}" target="_blank" class="partner-circle">
+                    {% if partner.logo %}
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="partner-logo">
+                    {% else %}
+                        <span class="partner-name">{{ partner.name }}</span>
+                    {% endif %}
+                </a>
+            </li>
+            {% empty %}
+            <li class="partner-circle">
+                <span class="partner-name">Партнеры пока не добавлены</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="atom-preloader">
+      <div class="nucleus"></div>
+      <div class="orbit orbit1">
+        <div class="electron"></div>
+      </div>
+      <div class="orbit orbit2">
+        <div class="electron"></div>
+      </div>
+      <div class="orbit orbit3">
+        <div class="electron"></div>
+      </div>
+    </section>
+
+</main>
+{% endblock %}
