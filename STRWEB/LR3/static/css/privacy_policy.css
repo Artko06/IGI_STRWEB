@@ -1,0 +1,43 @@
+/* === ПСЕВДОКЛАССЫ === */
+
+nav[aria-label="Оглавление"] a:link {
+  color: blue;
+  text-decoration: underline;
+}
+
+nav[aria-label="Оглавление"] a:visited {
+  color: purple;
+  text-decoration: underline;
+}
+
+nav[aria-label="Оглавление"] a:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+nav[aria-label="Оглавление"] a:focus {
+    outline: 2px solid red;
+}
+
+nav[aria-label="Оглавление"] a:active {
+  color: green;
+  text-decoration: underline;
+}
+
+/* Первый элемент */
+nav[aria-label="Оглавление"] li:first-child {
+    background: burlywood;
+    border-radius: 8px 8px 8px 8px;
+}
+
+/* Нечётные элементы */
+nav[aria-label="Оглавление"] li:nth-child(odd):not(:first-child):not(:last-child) {
+    background: bisque;
+    border-radius: 8px 8px 8px 8px;
+}
+
+/* Последний элемент */
+nav[aria-label="Оглавление"] li:last-child {
+    background: burlywood;
+    border-radius: 8px 8px 8px 8px;
+}

@@ -1,0 +1,17 @@
+.article-summary p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    width: 75%;
+}
+
+.article-content p {
+    margin-top: 0;
+}
+
+.article-content {
+    column-count: 2;
+    column-gap: 40px;
+    column-rule: 1px solid #ccc;
+}
