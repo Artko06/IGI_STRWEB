@@ -1,0 +1,214 @@
+/* === СЕЛЕКТОРЫ === */
+
+[aria-label^="Пункт самовывоза"] {
+    border-left: 3px solid #333;
+    padding-left: 10px;
+}
+
+[data-field$="number"] {
+    font-family: monospace;
+    background-color: #f5f5f5;
+    padding: 2px 5px;
+}
+
+[aria-label*="Скачать"] {
+    color: #28a745;
+    font-weight: bold;
+}
+
+[contenteditable="false"] {
+    user-select: none;
+}
+
+/* Объединение (AND) */
+section[data-component][aria-labelledby] {
+    background-color: #f9f9f9;
+    padding: 15px;
+}
+
+/* Дочерние элементы (> ) */
+ul[role="list"] > li[role="listitem"] {
+    margin-bottom: 8px;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Соседние элементы */
+h2 + figure {
+    margin-top: 15px;
+}
+
+h2 ~ p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* === ПСЕВДОКЛАССЫ === */
+
+/* Кавычки в зависимости от языка цитаты */
+blockquote[cite*="gosstandart"]:lang(ru):before {
+    content: "«"; /* Русские открывающие кавычки */
+    font-size: 1.5em;
+    color: #3498db;
+}
+
+blockquote[cite*="gosstandart"]:lang(ru):after {
+    content: "»"; /* Русские закрывающие кавычки */
+    font-size: 1.5em;
+    color: #3498db;
+}
+
+blockquote:lang(en):before {
+    content: "“"; /* Английские открывающие кавычки */
+    font-size: 1.5em;
+    color: #3498db;
+}
+
+blockquote:lang(en):after {
+    content: "”"; /* Английские закрывающие кавычки */
+    font-size: 1.5em;
+    color: #3498db;
+}
+
+/* === ПСЕВДОЭЛЕМЕНТЫ === */
+
+/* Выделить первую букву текста в статье */
+h2[id="certificate-heading"]:first-of-type::first-letter {
+    font-size: 3em;
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1;
+    margin-right: 8px;
+    font-family: Georgia, serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Выделить первую строку текста */
+h2[id="certificate-heading"]:first-of-type::first-line {
+    font-weight: 800;
+    color: #2c3e50;
+}
+
+/* Добавить контекст в начале и конце фрагмента текста */
+h2[id="video-heading"]:first-of-type::before {
+    content: "\1F3AC  ";
+}
+
+h2[id="video-heading"]:first-of-type::after {
+    content: "  \1F3AC";
+}
+
+/* Маркер для пунктов самовывоза */
+[data-component="pickup-points"] ul[role="list"] li::before {
+    content: "\1F4CD ";
+    font-size: 1.2em;
+    margin-right: 8px;
+}
+
+/* Изменять стиль при выделении текста */
+::selection {
+    background-color: #3498db;
+    color: white;
+}
+
+::-moz-selection {
+    background-color: #3498db;
+    color: white;
+}
+
+
+/* Основной контейнер сертификата */
+.certificate {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 50px 60px;
+    border: 10px solid transparent;
+    -webkit-border-image: -webkit-linear-gradient(45deg, #004080, #c00, #004080);
+    -moz-border-image: -moz-linear-gradient(45deg, #004080, #c00, #004080);
+    -o-border-image: -o-linear-gradient(45deg, #004080, #c00, #004080);
+    border-image: linear-gradient(45deg, #004080, #c00, #004080);
+    border-image-slice: 1;
+    -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    margin: 50px auto;
+    z-index: 1;
+    font-family: "Times New Roman", Georgia, serif;
+    color: #222;
+}
+
+.certificate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/media/images/logo.png');
+    background-size: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.certificate #certificate-heading {
+    text-align: center;
+    font-size: 32px;
+    color: #b30000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.certificate blockquote {
+    font-style: italic;
+    border-left: 4px solid #004080;
+    padding-left: 15px;
+    margin: 20px 0;
+    color: #333;
+    background: #f9f9f9;
+}
+
+.certificate p {
+    line-height: 1.6;
+    text-align: justify;
+    font-size: 18px;
+}
+
+.certificate strong {
+    color: #004080;
+}
+
+/* Хронология */
+.certificate ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.certificate ul li {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: linear-gradient(to right, #e6f0ff, #ffffff);
+    border-left: 4px solid #004080;
+    transition: 0.3s ease;
+}
+
+.certificate ul li:hover {
+    background: #f0f8ff;
+    transform: translateX(5px);
+}
+
+/* Реквизиты */
+.certificate [data-field],
+.certificate time {
+    font-weight: bold;
+    color: #b30000;
+}
+
+.certificate h3,
+.certificate p {
+    text-align: center;
+}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Мои покупки{% endblock %}
+
+{% block content %}
+<main>
+    <section aria-label="Список покупок">
+        <table class="table">
+            <caption>Мои покупки</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Покупатель</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Дата продажи</th>
+                    <th scope="col">Дата доставки</th>
+                    <th scope="col">Город</th>
+                    <th scope="col">Товары</th>
+                    <th scope="col">Итоговая цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.customer.first_name }} {{ sale.customer.last_name }}</td>
+                    <td><a href="mailto:{{ sale.customer.email }}">{{ sale.customer.email }}</a></td>
+                    <td><a href="tel:{{ sale.customer.phone }}">{{ sale.customer.phone }}</a></td>
+                    <td><time datetime="{{ sale.sale_date|date:'Y-m-d' }}">{{ sale.sale_date|date:"Y-m-d" }}</time></td>
+                    <td><time datetime="{{ sale.delivery_date|date:'Y-m-d' }}">{{ sale.delivery_date|date:"Y-m-d" }}</time></td>
+                    <td>{{ sale.city }}</td>
+                    <td>
+                        <ul>
+                            {% for sale_product in sale.saleproduct_set.all %}
+                            <li>
+                                {{ sale_product.product.name }} - {{ sale_product.quantity }} {{ sale_product.product.get_unit_display }} ({{ sale_product.price }})
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ sale.total_price }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">У вас пока нет покупок.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,319 @@
+.cleaning-animation {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: #333333;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 40px 0;
+    border: 2px solid #767676;
+}
+
+.dirty-surface {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 30%, #2c2c2c 10px, transparent 11px),
+        radial-gradient(circle at 60% 70%, #404040 15px, transparent 16px),
+        radial-gradient(circle at 80% 20%, #4a4a4a 8px, transparent 9px);
+    animation: surfaceDirty 1s forwards;
+}
+
+.cleaning-spray {
+    position: absolute;
+    width: 60px;
+    height: 80px;
+    background: #3498db;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: 50px;
+    left: -100px;
+    opacity: 0;
+    animation: sprayAppear 1s 1s forwards, sprayMove 1s 2s forwards;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.nozzle {
+    position: absolute;
+    width: 20px;
+    height: 30px;
+    background: #2c3e50;
+    top: -20px;
+    left: 20px;
+    border-radius: 5px 5px 0 0;
+}
+
+.spray-particles {
+    position: absolute;
+    top: -20px;
+    left: 40px;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(195, 207, 226, 0.7);
+    border-radius: 50%;
+    opacity: 0;
+    animation: spray-particle 1s 2.5s forwards;
+}
+
+.particle:nth-child(2) {
+    animation-delay: 2.6s;
+}
+
+.particle:nth-child(3) {
+    animation-delay: 2.7s;
+}
+
+.particle:nth-child(4) {
+    animation-delay: 2.8s;
+}
+
+.particle:nth-child(5) {
+    animation-delay: 2.9s;
+}
+
+.particle:nth-child(6) {
+    animation-delay: 3s;
+}
+
+.sponge {
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    background: #f5f7fa;
+    border-radius: 10px;
+    top: 200px;
+    left: -100px;
+    opacity: 0;
+    animation: spongeAppear 1s 1s forwards, spongeClean 4s 3s forwards;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    border: 1px solid #8e8e8e;
+}
+
+.cleaning-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #333333 0%, #555555 50%, #f8f9fa 100%);
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    animation: cleanSurface 4s 3s forwards;
+}
+
+.company-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Montserrat", sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #f2f2f2;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: showCompanyName 2s 7s forwards;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    background: rgba(51, 51, 51, 0.9);
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 2px solid #767676;
+}
+
+@keyframes surfaceDirty {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes sprayAppear {
+    from { opacity: 0; transform: scale(0); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes sprayMove {
+    from { left: -100px; }
+    to { left: 40%; }
+}
+
+@keyframes spray-particle {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(100px, 50px) scale(0);
+    }
+}
+
+@keyframes spongeAppear {
+    from { opacity: 0; transform: scale(0) rotate(0deg); }
+    to { opacity: 1; transform: scale(1) rotate(-10deg); }
+}
+
+@keyframes spongeClean {
+    from { left: -100px; }
+    to { left: 100%; }
+}
+
+@keyframes cleanSurface {
+    from {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    }
+    to {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+@keyframes showCompanyName {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes spongeClean {
+    from { left: -100px; }
+    to { left: 100%; }
+}
+
+@keyframes cleanSurface {
+    from {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    }
+    to {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+@keyframes showCompanyName {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+.latest-article {
+    position: relative;
+    z-index: 10;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.partners-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.partners-list li {
+    width: 120px;
+    height: 120px;
+}
+
+.partner-circle {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border: 3px solid #3498db;
+    box-shadow:
+        0 4px 8px rgba(52, 152, 219, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.partner-circle:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow:
+        0 8px 16px rgba(52, 152, 219, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.9);
+    border-color: #2980b9;
+}
+
+.partner-logo {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.partner-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #333;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.partner-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.partner-name-text {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#scroll-animation-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-bottom: 50px;
+}
+
+#basket {
+    width: 500px;
+    height: auto;
+    position: relative;
+    z-index: 10;
+}
+
+.product-bottle {
+    position: absolute;
+    width: 150px;
+    height: auto;
+    top: -300px;
+    opacity: 0;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    z-index: 11;
+}
+
+#bottle1 {
+    left: 40%;
+}
+
+#bottle2 {
+    left: 45%;
+}
+
+#bottle3 {
+    left: 50%;
+}

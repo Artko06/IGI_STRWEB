@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}О компании{% endblock %}
+
+{% block head %}
+    <meta name="description" content="{{ company.description|default:'ООО Союз Чистоты — сеть магазинов бытовой химии в Минске' }}">
+    <meta name="keywords" content="ООО Союз Чистоты, бытовая химия, Беларусь, сеть магазинов" />
+    <meta property="og:title" content="О компании — {{ company.name }}">
+    <meta property="og:type" content="business.business">
+    <meta property="og:locale" content="ru_RU">
+
+    {% block extra_css %}
+       {{ block.super }}
+       <link rel="stylesheet" href="{% static 'css/about_us.css' %}">
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+<main id="main-content" role="main" aria-label="Основное содержание страницы о компании">
+<h1 id="company-title" tabindex="0" aria-describedby="title-desc">О компании</h1>
+<span id="title-desc" hidden>Страница содержит информацию о компании Союз Чистоты</span>
+
+<article class="about-company" itemscope itemtype="https://schema.org/Organization"
+         data-page-type="about" data-company-id="{{ company.id|default:0 }}"
+         aria-labelledby="company-title">
+
+    <h2 id="logo-heading" class="section-title">Логотип компании</h2>
+        <figure aria-labelledby="logo-heading" role="group">
+            {% if company.logo_small and company.logo_medium and company.logo_large %}
+            <picture>
+              <source class="logo" media="(max-width: 600px)" srcset="{{ company.logo_small.url }}">
+              <source class="logo" media="(max-width: 1200px)" srcset="{{ company.logo_medium.url }}">
+              <img class="logo" src="{{ company.logo_large.url }}" alt="{{ company.name }}">
+            </picture>
+            {% else %}
+            <p role="status" aria-live="polite">Логотип отсутствует</p>
+            {% endif %}
+        </figure>
+
+    {% if company.video_url %}
+    <section>
+        <h2 id="video-heading">Видео о компании</h2>
+        <iframe width="560" height="315"
+            src="{{ company.video_url }}"
+            allow="picture-in-picture"
+            allowfullscreen
+            title="Осторожность с бытовой химией"
+            aria-describedby="video-desc">
+        </iframe>
+    </section>
+    {% endif %}
+
+    {% if company.audio %}
+    <section>
+        <h2 id="audio-heading">Аудиозапись</h2>
+        <audio controls
+               aria-describedby="audio-desc"
+               preload="metadata">
+            <source src="{{ company.audio.url }}" type="audio/mpeg">
+            Ваш браузер не поддерживает аудио элемент.
+        </audio>
+        <p>
+            <a href="{{ company.audio.url }}" download
+               role="button" aria-label="Скачать аудиозапись">
+                Скачать аудио
+            </a>
+        </p>
+    </section>
+    {% endif %}
+
+    <section aria-labelledby="notes-heading" contenteditable="false">
+      <h2 id="notes-heading">Внутренние заметки</h2>
+
+      <!-- Четверостишие с фиксированным переносом -->
+      <pre aria-label="Стихотворение о чистоте" spellcheck="false">
+Мой дом блестит, и это знак,
+Что пыль исчезла просто так.
+В углу уют, в окне закат,
+И в сердце — радости заряд.
+      </pre>
+
+      <!-- Четверостишие с потенциальным переносом -->
+      <p dir="ltr" lang="ru" translate="no">
+        Мой дом блестит, и это знак,<br>
+        Что пыль исчезла просто так.<br>
+        В углу уют, в окне закат,<br>
+        И в сердце — радости заряд.
+      </p>
+
+      <!-- Python-код -->
+      <pre><code class="language-python" spellcheck="false"
+                 aria-describedby="code-desc">
+        class CleanHouse:
+            def __init__(self, rooms):
+                self.rooms = rooms
+
+            def start_cleaning(self):
+                for room in self.rooms:
+                    print(f"🧹 Убираем {room}...")
+                print("✨ Все комнаты сияют чистотой!")
+
+        if __name__ == "__main__":
+            CleanHouse(["кухня", "гостиная", "коридор"]).start_cleaning()
+      </code></pre>
+      <span id="code-desc" hidden>Пример кода на Python для автоматизации уборки</span>
+    </section>
+
+    <section aria-labelledby="pickup-heading" data-component="pickup-points">
+        <h2 id="pickup-heading">Пункты самовывоза</h2>
+        <ul role="list">
+            {% for point in company.pickup_points.all %}
+                <li itemscope itemtype="https://schema.org/PostalAddress"
+                    role="listitem"
+                    data-point-id="{{ point.id }}"
+                    data-city="{{ point.city }}"
+                    aria-label="Пункт самовывоза в {{ point.city }}, {{ point.address }}">
+                    <strong>Пункт №{{ forloop.counter }}:</strong>
+                    <span itemprop="addressLocality">{{ point.city }}</span>,
+                    <span itemprop="streetAddress">{{ point.address }}</span>
+                    {% if point.note %} ({{ point.note }}){% endif %}
+                </li>
+            {% empty %}
+                <li role="status" aria-live="polite">Нет доступных пунктов самовывоза</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <article class="certificate">
+        <h2 id="certificate-heading">СЕРТИФИКАТ СООТВЕТСТВИЯ</h2>
+
+        <blockquote cite="https://gosstandart.gov.by/"
+                    aria-describedby="blockquote-desc"
+                    lang="ru">
+            Сертификация продукции — это гарантия её качества и безопасности для потребителей
+        </blockquote>
+        <span id="blockquote-desc" hidden>Цитата с официального сайта Госстандарта</span>
+
+        {% if company.certificate_number %}
+            <h3 itemprop="identifier">{{ company.certificate_number }}</h3>
+        {% endif %}
+
+        <p>Настоящим удостоверяется, что сеть магазинов бытовой химии
+        <span itemprop="name"><strong>"{{ company.name }}"</strong></span>
+        прошла сертификацию.</p>
+
+        <h3>Хронология сертификации:</h3>
+        <ul role="list">
+            {% for event in company.cert_history.all %}
+                <li role="listitem"
+                    data-year="{{ event.year }}"
+                    aria-label="Событие сертификации в {{ event.year }} году">
+                    {{ event.year }} — {{ event.description }}
+                </li>
+            {% empty %}
+                <li role="status" aria-live="polite">Нет данных о сертификации</li>
+            {% endfor %}
+        </ul>
+
+        {% if company.certificate_reg_number %}
+            <p><strong>Регистрационный номер:</strong>
+               <span data-field="reg-number">{{ company.certificate_reg_number }}</span>
+            </p>
+        {% endif %}
+        {% if company.certificate_valid_until %}
+            <p><strong>Срок действия:</strong>
+               <time datetime="{{ company.certificate_valid_until|date:'Y-m-d' }}">
+                   до {{ company.certificate_valid_until }}
+               </time>
+            </p>
+        {% endif %}
+        {% if company.certificate_authority %}
+            <p><strong>Орган по сертификации:</strong>
+               <span data-field="authority">{{ company.certificate_authority }}</span>
+            </p>
+        {% endif %}
+        {% if company.certificate_object %}
+            <p><strong>Объект сертификации:</strong>
+               <span data-field="object">{{ company.certificate_object }}</span>
+            </p>
+        {% endif %}
+    </article>
+
+    <section aria-labelledby="legal-heading"
+             data-component="legal-info"
+             contenteditable="false">
+        <h2 id="legal-heading">Юридические реквизиты</h2>
+        <address aria-label="Юридические реквизиты компании {{ company.name }}">
+            <p><strong>Наименование:</strong>
+               <span itemprop="name" data-field="company-name">{{ company.name }}</span>
+            </p>
+            {% if company.legal_address %}
+                <p><strong>Юридический адрес:</strong>
+                   <span itemprop="address" data-field="legal-address">{{ company.legal_address }}</span>
+                </p>
+            {% endif %}
+            {% if company.inn %}
+                <p><strong>ИНН:</strong>
+                   <span data-field="inn" aria-label="И Н Н">{{ company.inn }}</span>
+                </p>
+            {% endif %}
+            {% if company.phone %}
+                <p><strong>Телефон:</strong>
+                   <span itemprop="telephone" data-field="phone">{{ company.phone }}</span>
+                </p>
+            {% endif %}
+        </address>
+    </section>
+</article>
+</main>
+{% endblock %}
