@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Шутки{% endblock %}
+
+{% block content %}
+<main>
+    <section class="random-joke" aria-label="Случайная шутка">
+        <header>
+            <h2>Random Joke:</h2>
+        </header>
+
+        <p>{{ random_joke }}</p>
+    </section>
+</main>
+{% endblock %}
